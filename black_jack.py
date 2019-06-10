@@ -1,5 +1,5 @@
 '''
-Text based python game
+Text based Black Jack game
 '''
 
 #To shuful the deck
@@ -29,3 +29,20 @@ class Card():
     def __str__(self):
         '''Method to print a Card'''
         return self.rank+" of "+self.suit
+
+
+class Deck():
+    """Store 52 card objects in a list (deck) that can later be shuffled"""
+    
+    def __init__(self):
+        self.deck = [] # Star with an empty list
+        for suit in suits:
+            for rank in ranks:
+                self.deck.append(Card(suit, rank))
+
+    def __str__(self):
+        '''Method to print the deck. May only be used for debugging'''
+        deck_comp = ''
+        for card in self.deck:
+            deck_comp += '\n'+card.__str__()
+        
