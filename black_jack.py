@@ -72,3 +72,45 @@ class Hand():
 
         self.cards.append(card)
         self.value += VALUES[card.rank]
+
+    def adjust_for_ace():
+        '''Adjust the ace value to be 11 or 1 based on the Hand value'''
+
+        while (self.value > 21) and self.aces:
+            self.value -= 10
+            self.aces -= 1
+
+class Chips:
+    """Class to keep track of Player's chips/money"""
+
+    def __init__(self, total=100):
+        self.total = total
+        self.bet = 0
+
+    def win_bet(self):
+        '''If player wins the bet, add to the total chips'''
+
+        self.total += self.bet
+
+    def lose_bet():
+        '''If player looses the bet, subtract from the total'''
+
+        self.total -= self.bet
+        
+
+# Creat a Deck object
+test_deck = Deck()
+
+# Shuffle the deck
+test_deck.shuffle()
+
+# Create a players Hand
+test_player = Hand()
+
+# Deal 1 card from the deck
+pulled_card = test_deck.deal()
+print(pulled_card)
+
+# Add the card to the player's Hand
+test_player.add_card(pulled_card)
+print(test_player.value)
