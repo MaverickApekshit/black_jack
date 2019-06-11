@@ -66,3 +66,9 @@ class Hand():
         self.cards = [] # Hand starts empty
         self.value = 0  # Start value is 0
         self.aces = 0   # Attribute to keep track of aces
+
+    def add_card(self, card):
+        '''card passed in from Deck.deal() --> single Card(suit, rank)'''
+
+        self.cards.append(card)
+        self.value += VALUES[card.rank]
