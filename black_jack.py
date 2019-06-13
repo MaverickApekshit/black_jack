@@ -73,7 +73,7 @@ class Hand():
         self.cards.append(card)
         self.value += VALUES[card.rank]
 
-    def adjust_for_ace():
+    def adjust_for_ace(self):
         '''Adjust the ace value to be 11 or 1 based on the Hand value'''
 
         while (self.value > 21) and self.aces:
@@ -92,11 +92,32 @@ class Chips:
 
         self.total += self.bet
 
-    def lose_bet():
+    def lose_bet(self):
         '''If player looses the bet, subtract from the total'''
 
         self.total -= self.bet
-        
+
+def take_bet(chips):
+    '''Function to take bets from the player'''
+
+    while  True:
+        try:
+            chips.bet = int(input("How many chips would you like to bet? "))
+        except:
+            print("Sorry, please provide an integer")
+        else:
+            if chips.bet > chips.total:
+                print(f'Sorry, you do not have enough chips! You have: {chips.total}')
+            else:
+                break
+
+def hit(deck, hand):
+    '''Function to perform a hit'''
+
+    single_card = deck.deal()
+    hand.add_card(single_card)
+    hand.adjust_for_ace()
+
 
 # Creat a Deck object
 test_deck = Deck()
