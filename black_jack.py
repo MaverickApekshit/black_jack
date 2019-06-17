@@ -139,20 +139,41 @@ def hit_or_stand(deck, hand):
 
         break
 
+def show_some(player,dealer):
+    '''Function to show all cards, except Dealer's first card.'''
 
-# Creat a Deck object
-test_deck = Deck()
+    print("\nDealer's Hand:")
+    print(" <card hidden>")
+    print('',dealer.cards[1])  
+    print("\nPlayer's Hand:", *player.cards, sep='\n ')
+    
+def show_all(player,dealer):
+    '''Function to show all cards'''
 
-# Shuffle the deck
-test_deck.shuffle()
+    print("\nDealer's Hand:", *dealer.cards, sep='\n ')
+    print("Dealer's Hand =",dealer.value)
+    print("\nPlayer's Hand:", *player.cards, sep='\n ')
+    print("Player's Hand =",player.value)
 
-# Create a players Hand
-test_player = Hand()
 
-# Deal 1 card from the deck
-pulled_card = test_deck.deal()
-print(pulled_card)
+'''
+Endgame Scenarios
+'''
+def player_busts(player, dealer, chips):
+    print("BUST PLAYER!")
+    chips.lose_bet()
 
-# Add the card to the player's Hand
-test_player.add_card(pulled_card)
-print(test_player.value)
+def player_wins(player, dealer, chips):
+    print("PLAYER WINS!")
+    chips.win_bet()
+
+def dealer_busts(player, dealer, chips):
+    print("PLAYER WINS! DEALER BUSTED!")
+    chips.win_bet()
+
+def dealer_wins(player, dealer, chips):
+    print("DEALER WINS!")
+    chips.lose_bet()
+
+def push(player, dealer, chips):
+    print("Dealer and player tie! PUSH")
