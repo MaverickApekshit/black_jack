@@ -5,18 +5,15 @@ Text based Black Jack game
 #To shuful the deck
 import random
 
-
 #Global variables to create the deck of cards
 SUITS = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
 RANKS = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen',
-         'King', 'Ace')
+             'King', 'Ace')
 VALUES = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9,
-          'Ten':10, 'Jack':10, 'Queen':10, 'King':10, 'Ace':11}
-
+              'Ten':10, 'Jack':10, 'Queen':10, 'King':10, 'Ace':11}
 
 #Boolean to control the flow of game
 PLAYING = True
-
 
 class Card():
     """Class for card object"""
@@ -177,3 +174,85 @@ def dealer_wins(player, dealer, chips):
 
 def push(player, dealer, chips):
     print("Dealer and player tie! PUSH")
+
+
+def game_play():
+    '''The main game play  logic'''
+
+    global PLAYING
+
+    while True:
+        
+        # Print an opening statement
+        print("WELCOME TO BLACKJACK")
+
+        # Create & shuffle the deck
+        deck = Deck()
+        deck.shuffle()
+
+        # Deal 2 cards to each player
+        player_hand = Hand()
+        player_hand.add_card(deck.deal())
+        player_hand.add_card(deck.deal())
+
+        dealer_hand = Hand()
+        dealer_hand.add_card(deck.deal())
+        dealer_hand.add_card(deck.deal())
+
+        # Set up the Player's chips
+        player_chips = Chips()
+
+        # Prompt the player for their bet
+        take_bet(player_chips)
+
+        # Show cards (but keep one dealer card hidden)
+        show_some(player_hand, dealer_hand)
+
+        while PLAYING:
+            
+            # Prompt for Player to Hit or Stand
+            hit_or_stand(deck, player_hand)
+
+            # Show cards (but keep one dealer card hidden)
+            show_some(player_hand, dealer_hand)
+
+            # If player's hand exceeds 21, run player_busts() and break out of loop
+            if player_hand.value > 21:
+                player_busts(player_hand, dealer_hand, player_chips)
+                break
+
+        # If Player hasn't busted, play Dealer's hand untill Dealer reaches 17
+        if player_hand.value <=21:
+
+            while  dealer_hand.value < player_hand.value:
+                hit(deck, dealer_hand)
+
+            # Show all cards
+            show_all(player_hand, dealer_hand)
+
+            # Run different winning scenarios
+            if dealer_hand.value > 21:
+                dealer_busts(player_hand, dealer_hand,player_chips)
+            elif dealer_hand.value > player_hand.value:
+                dealer_wins(player_hand, dealer_hand,player_chips)
+            elif dealer_hand.value > player_hand.value:
+                player_wins(player_hand, dealer_hand,player_chips)
+            else:
+                push(player_hand, dealer_hand)
+
+            # Inform Player of their chips total
+            print(f'\n Player total chips are at: {player_chips.total}')
+
+            # Ask to play again
+            new_game = input("Would you like to play another hand? y/n")
+
+            if new_game[0].lower() == 'y':
+                PLAYING = True
+                continue
+            else:
+                print('Thank you for playing!')
+                break
+
+
+if __name__=='__main__':
+    game_play()
