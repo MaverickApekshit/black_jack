@@ -181,6 +181,8 @@ def game_play():
 
     global PLAYING
 
+    total_player_chips = 100
+
     while True:
         
         # Print an opening statement
@@ -200,7 +202,7 @@ def game_play():
         dealer_hand.add_card(deck.deal())
 
         # Set up the Player's chips
-        player_chips = Chips()
+        player_chips = Chips(total_player_chips)
 
         # Prompt the player for their bet
         take_bet(player_chips)
@@ -238,20 +240,21 @@ def game_play():
             elif dealer_hand.value > player_hand.value:
                 player_wins(player_hand, dealer_hand,player_chips)
             else:
-                push(player_hand, dealer_hand)
+                push(player_hand, dealer_hand, player_chips)
 
-            # Inform Player of their chips total
-            print(f'\n Player total chips are at: {player_chips.total}')
+        # Inform Player of their chips total
+        total_player_chips = player_chips.total
+        print(f'\n Player total chips are at: {total_player_chips}')
 
-            # Ask to play again
-            new_game = input("Would you like to play another hand? y/n")
+        # Ask to play again
+        new_game = input("Would you like to play another hand? y/n")
 
-            if new_game[0].lower() == 'y':
-                PLAYING = True
-                continue
-            else:
-                print('Thank you for playing!')
-                break
+        if new_game[0].lower() == 'y':
+            PLAYING = True
+            continue
+        else:
+            print('Thank you for playing!')
+            break
 
 
 if __name__=='__main__':
