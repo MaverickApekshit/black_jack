@@ -9,3 +9,5 @@ Here are the features:
 - The player can stand or hit.
 - The player can pick their betting amount.
 - Player can win, loose, or bust, etc...
+
+[![Run on Repl.it](https://repl.it/badge/github/MaverickApekshit/black_jack)](https://repl.it/github/MaverickApekshit/black_jack)
